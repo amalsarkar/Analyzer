@@ -128,7 +128,7 @@ private:
   void create_fillInfo();
 
   double getZBoostWeight();
-
+  double getTauWeight();
 
   inline bool passCutRange(string, double, const PartStats&);
   bool passCutRange(double, const pair<double, double>&);

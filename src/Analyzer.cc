@@ -1684,6 +1684,28 @@ double Analyzer::getZBoostWeight(){
   return boostweigth;
 }
 
+double Analyzer::getTauWeight(){
+  double tauweight=1.;
+  double taupt = 0.;
+  if(active_part->at(CUTS::eRTau1)->size() == 1){
+  taupt = _Tau->pt(active_part->at(CUTS::eRTau1)->at(0));
+
+  if(taupt > 20. && taupt <= 22.) tauweight = 3.089;
+  else if(taupt > 22. && taupt <= 24.) tauweight = 2.221;
+  else if(taupt > 24. && taupt <= 26.) tauweight = 2.328;
+  else if(taupt > 26. && taupt <= 28.) tauweight = 3.471;
+  else if(taupt > 28. && taupt <= 30.) tauweight = 4.756;
+  else if(taupt > 32. && taupt <= 34.) tauweight = 4.142;
+  else if(taupt > 34. && taupt <= 36.) tauweight = 2.303;
+  else if(taupt > 36. && taupt <= 38.) tauweight = 3.802;
+  else if(taupt > 38. && taupt <= 40.) tauweight = 2.961;
+  else {tauweight = 1.;}
+  }
+
+  return tauweight;
+}
+
+
 
 ////Grabs a list of the groups of histograms to be filled and asked Fill_folder to fill up the histograms
 void Analyzer::fill_histogram() {
@@ -1702,6 +1724,9 @@ void Analyzer::fill_histogram() {
     if(distats["Run"].bfind("ApplyZBoostSF") && isVSample){
       wgt *= getZBoostWeight();
     }
+    if(distats["Run"].bfind("ApplyTauSF") && isVSample){
+      wgt *= getTauWeight();
+    }	   
   }else  wgt=1.;
   //backup current weight
   backup_wgt=wgt;
