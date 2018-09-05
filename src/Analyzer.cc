@@ -1690,18 +1690,17 @@ double Analyzer::getTauWeight(){
   if(active_part->at(CUTS::eRTau1)->size() == 1){
   taupt = _Tau->pt(active_part->at(CUTS::eRTau1)->at(0));
 
-  if(taupt > 20. && taupt <= 22.) tauweight = 3.089;
-  else if(taupt > 22. && taupt <= 24.) tauweight = 2.221;
-  else if(taupt > 24. && taupt <= 26.) tauweight = 2.328;
-  else if(taupt > 26. && taupt <= 28.) tauweight = 3.471;
-  else if(taupt > 28. && taupt <= 30.) tauweight = 4.756;
-  else if(taupt > 32. && taupt <= 34.) tauweight = 4.142;
-  else if(taupt > 34. && taupt <= 36.) tauweight = 2.303;
-  else if(taupt > 36. && taupt <= 38.) tauweight = 3.802;
-  else if(taupt > 38. && taupt <= 40.) tauweight = 2.961;
+  if(taupt > 20. && taupt <= 22.) tauweight = 0.323;
+  else if(taupt > 22. && taupt <= 24.) tauweight = 0.450;
+  else if(taupt > 24. && taupt <= 26.) tauweight = 0.429;
+  else if(taupt > 26. && taupt <= 28.) tauweight = 0.288;
+  else if(taupt > 28. && taupt <= 30.) tauweight = 0.210;
+  else if(taupt > 32. && taupt <= 34.) tauweight = 0.241;
+  else if(taupt > 34. && taupt <= 36.) tauweight = 0.434;
+  else if(taupt > 36. && taupt <= 38.) tauweight = 0.069;
+  else if(taupt > 38. && taupt <= 40.) tauweight = 0.070;
   else {tauweight = 1.;}
   }
-
   return tauweight;
 }
 
@@ -1727,7 +1726,10 @@ void Analyzer::fill_histogram() {
     if(distats["Run"].bfind("ApplyTauSF") && isVSample){
       wgt *= getTauWeight();
     }	   
-  }else  wgt=1.;
+  }else{
+	  wgt=1.;
+	  if(distats["Run"].bfind("ApplyTauSF")) wgt *= getTauWeight();
+        }
   //backup current weight
   backup_wgt=wgt;
 
